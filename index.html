@@ -1,65 +1,93 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestor de Google Sheets</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- Cargar las bibliotecas de Google -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://apis.google.com/js/api.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script defer src="js.js"></script>
 </head>
-<body>
-  <div class="container">
-    <h1>Gestor de Google Sheets</h1>
-    <div id="auth-container">
-      <button id="authorize_button">Iniciar sesión con Google</button>
-      <button id="signout_button" style="display: none;">Cerrar sesión</button>
+<body class="bg-gray-100 text-gray-800 font-sans">
+  <div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">
+      Gestor de Google Sheets
+    </h1>
+
+    <div id="auth-container" class="text-center mb-6">
+      <button id="authorize_button" class="px-4 py-2 bg-blue-600 text-white font-semibold rounded shadow-md hover:bg-blue-700 transition">
+        Iniciar sesión con Google
+      </button>
+      <button id="signout_button" class="px-4 py-2 bg-red-500 text-white font-semibold rounded shadow-md hover:bg-red-600 transition hidden">
+        Cerrar sesión
+      </button>
     </div>
 
-    <div id="file-manager" style="display: none;">
-      <h2>Gestión de Archivos</h2>
-      <button id="create_file">Crear Nuevo Archivo</button>
-      <button id="list_files">Listar Archivos</button>
-      <div id="file-list"></div>
+    <div id="file-manager" class="bg-white rounded-lg shadow-md p-6 mb-6 hidden">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-4">Gestión de Archivos</h2>
+      <div class="flex gap-4">
+        <button id="create_file" class="px-4 py-2 bg-green-500 text-white font-semibold rounded shadow-md hover:bg-green-600 transition">
+          Crear Nuevo Archivo
+        </button>
+        <button id="list_files" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded shadow-md hover:bg-blue-600 transition">
+          Listar Archivos
+        </button>
+      </div>
+      <div id="file-list" class="mt-4"></div>
     </div>
 
-    <div id="sheet-manager" style="display: none;">
-      <h2>Gestión de Hojas</h2>
-      <p><strong>Archivo Actual:</strong> <span id="current-file-name"></span></p>
-      <button id="create_sheet">Crear Nueva Hoja</button>
-      <button id="list_sheets">Listar Hojas</button>
-      <div id="sheet-list"></div>
+    <div id="sheet-manager" class="bg-white rounded-lg shadow-md p-6 mb-6 hidden">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-4">Gestión de Hojas</h2>
+      <p class="text-gray-600">
+        <strong>Archivo Actual:</strong> <span id="current-file-name"></span>
+      </p>
+      <div class="flex gap-4 mt-4">
+        <button id="create_sheet" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded shadow-md hover:bg-purple-600 transition">
+          Crear Nueva Hoja
+        </button>
+        <button id="list_sheets" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded shadow-md hover:bg-blue-600 transition">
+          Listar Hojas
+        </button>
+      </div>
+      <div id="sheet-list" class="mt-4"></div>
     </div>
 
-    <div id="cell-manager" style="display: none;">
-      <h2>Gestión de Celdas</h2>
-      <p><strong>Hoja Actual:</strong> <span id="current-sheet-name"></span></p>
-      <div class="cell-actions">
+    <div id="cell-manager" class="bg-white rounded-lg shadow-md p-6 hidden">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-4">Gestión de Celdas</h2>
+      <p class="text-gray-600">
+        <strong>Hoja Actual:</strong> <span id="current-sheet-name"></span>
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
         <div>
-          <h3>Ver Celdas</h3>
-          <button id="view_cells">Ver Celdas con Contenido</button>
-          <div id="cell-content"></div>
+          <h3 class="text-lg font-medium text-gray-700 mb-2">Ver Celdas</h3>
+          <button id="view_cells" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded shadow-md hover:bg-blue-600 transition">
+            Ver Celdas con Contenido
+          </button>
+          <div id="cell-content" class="mt-4"></div>
         </div>
         <div>
-          <h3>Editar Celda</h3>
-          <label for="cell_range">Rango (e.g., A1):</label>
-          <input type="text" id="cell_range">
-          <label for="cell_value">Nuevo Valor:</label>
-          <input type="text" id="cell_value">
-          <button id="update_cell">Actualizar Celda</button>
+          <h3 class="text-lg font-medium text-gray-700 mb-2">Editar Celda</h3>
+          <label for="cell_range" class="block text-sm font-medium text-gray-600">Rango (e.g., A1):</label>
+          <input type="text" id="cell_range" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <label for="cell_value" class="block text-sm font-medium text-gray-600 mt-2">Nuevo Valor:</label>
+          <input type="text" id="cell_value" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <button id="update_cell" class="mt-2 px-4 py-2 bg-green-500 text-white font-semibold rounded shadow-md hover:bg-green-600 transition">
+            Actualizar Celda
+          </button>
         </div>
         <div>
-          <h3>Eliminar Celda</h3>
-          <label for="delete_cell_range">Rango (e.g., A1):</label>
-          <input type="text" id="delete_cell_range">
-          <button id="delete_cell">Eliminar Celda</button>
+          <h3 class="text-lg font-medium text-gray-700 mb-2">Eliminar Celda</h3>
+          <label for="delete_cell_range" class="block text-sm font-medium text-gray-600">Rango (e.g., A1):</label>
+          <input type="text" id="delete_cell_range" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500">
+          <button id="delete_cell" class="mt-2 px-4 py-2 bg-red-500 text-white font-semibold rounded shadow-md hover:bg-red-600 transition">
+            Eliminar Celda
+          </button>
         </div>
       </div>
     </div>
 
-    <pre id="output"></pre>
+    <pre id="output" class="bg-gray-100 border border-gray-300 rounded p-4 mt-6 overflow-auto"></pre>
   </div>
 </body>
 </html>

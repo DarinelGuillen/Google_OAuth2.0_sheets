@@ -1,0 +1,8 @@
+# Credenciales generales
+REDIRECT_URI=http://localhost:3000
+SCOPES_DRIVE=https://www.googleapis.com/auth/drive.file
+SCOPES_SHEETS=https://www.googleapis.com/auth/spreadsheets
+
+# Credenciales para Google Drive API
+CLIENT_ID=CLIENT_ID
+CLIENT_SECRET=CLIENT_SECRET
