@@ -1,0 +1,65 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestor de Google Sheets</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Cargar las bibliotecas de Google -->
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script defer src="js.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Gestor de Google Sheets</h1>
+    <div id="auth-container">
+      <button id="authorize_button">Iniciar sesión con Google</button>
+      <button id="signout_button" style="display: none;">Cerrar sesión</button>
+    </div>
+
+    <div id="file-manager" style="display: none;">
+      <h2>Gestión de Archivos</h2>
+      <button id="create_file">Crear Nuevo Archivo</button>
+      <button id="list_files">Listar Archivos</button>
+      <div id="file-list"></div>
+    </div>
+
+    <div id="sheet-manager" style="display: none;">
+      <h2>Gestión de Hojas</h2>
+      <p><strong>Archivo Actual:</strong> <span id="current-file-name"></span></p>
+      <button id="create_sheet">Crear Nueva Hoja</button>
+      <button id="list_sheets">Listar Hojas</button>
+      <div id="sheet-list"></div>
+    </div>
+
+    <div id="cell-manager" style="display: none;">
+      <h2>Gestión de Celdas</h2>
+      <p><strong>Hoja Actual:</strong> <span id="current-sheet-name"></span></p>
+      <div class="cell-actions">
+        <div>
+          <h3>Ver Celdas</h3>
+          <button id="view_cells">Ver Celdas con Contenido</button>
+          <div id="cell-content"></div>
+        </div>
+        <div>
+          <h3>Editar Celda</h3>
+          <label for="cell_range">Rango (e.g., A1):</label>
+          <input type="text" id="cell_range">
+          <label for="cell_value">Nuevo Valor:</label>
+          <input type="text" id="cell_value">
+          <button id="update_cell">Actualizar Celda</button>
+        </div>
+        <div>
+          <h3>Eliminar Celda</h3>
+          <label for="delete_cell_range">Rango (e.g., A1):</label>
+          <input type="text" id="delete_cell_range">
+          <button id="delete_cell">Eliminar Celda</button>
+        </div>
+      </div>
+    </div>
+
+    <pre id="output"></pre>
+  </div>
+</body>
+</html>
